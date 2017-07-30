@@ -1,5 +1,6 @@
 package com.example.kdl.coolweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.kdl.coolweather.gson.Forecast;
 import com.example.kdl.coolweather.gson.Weather;
+import com.example.kdl.coolweather.service.AutoUpdateService;
 import com.example.kdl.coolweather.util.HttpUtil;
 import com.example.kdl.coolweather.util.Utility;
 
@@ -168,6 +170,7 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.apply();
                             mWeatherId = weather.basic.weatherId;
                             showWeatherInfo(weather);
+
                         } else {
                             Toast.makeText(getApplicationContext(), "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
@@ -213,5 +216,7 @@ public class WeatherActivity extends AppCompatActivity {
         mCarWashText.setText(carWash);
         mSportText.setText(sport);
         mWeatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
